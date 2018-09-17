@@ -1,4 +1,5 @@
-### Mapping
+Mapping
+=======
 
 Let's look at a search request similar to the last one, only this time we filter by author instead of year.
 

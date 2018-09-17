@@ -1,4 +1,5 @@
-### Where to go from here
+What's Next
+===========
 
 We've covered quite a lot of things in this article. Still, we've barely scratched the surface of ElasticSearch's goodness.
 

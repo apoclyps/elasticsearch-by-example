@@ -1,4 +1,5 @@
-### Indexing
+Indexing
+========
 
 In ElasticSearch indexing corresponds to both "Create" and "Update" in CRUD - if we index a document with a given type and ID that doesn't already exists it's inserted. If a document with the same type and ID already exists it's overwritten.
 
@@ -96,3 +97,7 @@ After executing the request we receive a response from ElasticSearch in the form
   "created": true
 }
 ```
+
+<span style="float: left;">[Previous: Setup](setup.md)</span>
+
+<span style="float: right;">[Next: Searching](searching.md)</span>

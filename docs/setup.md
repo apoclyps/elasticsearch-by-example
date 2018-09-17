@@ -1,4 +1,5 @@
-### What you need to get started
+Getting Started
+===============
 
 What things you need to install the software and how to install them:
 
@@ -19,7 +20,7 @@ elasticsearch-head is a web front end for browsing and interacting with an Elast
 Running the following script in your terminal will populate your local elasticsearch with real event data from the `sample_data.json` seed file.
 
 ```sh
-./load_data.sh
+./scripts/load.sh
 ```
 
 > Connect to you're local elasticsearch via HEAD, and confirm data is present by first connecting to '' and then running the following request under the `Any Request` tab:
@@ -38,6 +39,6 @@ Running the following script in your terminal will populate your local elasticse
 
 If you can successfully view data via the Elasticsearch head client, you are now ready to progress onto creating an index.
 
-<span style="float: left;">[Previous: Overview](searching)</span>
+<span style="float: left;">[Previous: Overview](searching.md)</span>
 
-<span style="float: right;">[Next: Indexing](indexing)</span>
+<span style="float: right;">[Next: Indexing](indexing.md)</span>
