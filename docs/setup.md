@@ -3,6 +3,7 @@ Getting Started
 
 What things you need to install the software and how to install them:
 
+-	[JQ](https://stedolan.github.io/jq/)
 -	[Docker](https://docs.docker.com/install/) - Used to build, ship, and run all services
 
 ### Setting up a local Elasticsearch instance:
@@ -17,7 +18,7 @@ elasticsearch-head is a web front end for browsing and interacting with an Elast
 
 ### Loading Data
 
-Running the following script in your terminal will populate your local elasticsearch with real event data from the `sample_data.json` seed file.
+Running the following script in your terminal will populate your local elasticsearch with real event data from the `events.json` seed file.
 
 ```sh
 ./scripts/load.sh

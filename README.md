@@ -14,6 +14,12 @@ So what's Elasticsearch?
 
 It is easy to get going with Elasticsearch. It ships with sensible defaults and hides complex search and distribution mechanics from beginners. It works quite well, right out of the box. With a short learning curve for grasping the basics, you can become productive very quickly.
 
+Prerequisites
+-------------
+
+-	[Docker](https://www.docker.com/)
+-	[JQ](https://stedolan.github.io/jq/)
+
 Tutorials
 ---------
 
@@ -40,5 +46,5 @@ Once the service has been started and is accessible on http://localhost:9200, yo
 
 ### Adapted from the following resources
 
--	http://joelabrahamsson.com/elasticsearch-101/
--	https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+-	[Elasticsearch 101](http://joelabrahamsson.com/elasticsearch-101/)
+-	[Elasticsearch Docs - v5.6](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)

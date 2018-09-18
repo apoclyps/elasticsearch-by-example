@@ -11,7 +11,7 @@ The index name is arbitrary. If there isn't an index with that name on the serve
 
 As for the type name it too is arbitrary. It serves several purposes, including:
 
-Each type has its own ID space. Different types can have different mappings ("schema" that defines how properties/fields should be indexed). Although it's possible, and common, to search over multiple types, it's easy to search only for one or more specific type(s). Let's index something! We can put just about anything into our index as long as it can be represented as a single JSON object. In this tutorial we'll be indexing and searching for movies. Here's a classic one:
+Each type has its own ID space. Different types can have different mappings ("schema" that defines how properties/fields should be indexed). Although it's possible, and common, to search over multiple types, it's easy to search only for one or more specific type(s). Let's index something! We can put just about anything into our index as long as it can be represented as a single JSON object. In this tutorial we'll be indexing and searching for events. Here's a classic one:
 
 **Example Event**
 
@@ -45,7 +45,7 @@ Each type has its own ID space. Different types can have different mappings ("sc
 }
 ```
 
-To index that we decide on an index name ("movies"), a type name ("movie") and an id ("1") and make a request following the pattern described above with the JSON object in the body.
+To index that we decide on an index name ("events"), a type name ("event") and an id ("1") and make a request following the pattern described above with the JSON object in the body.
 
 ```json
 curl -XPUT "http://localhost:9200/events/event/613119d5-f9ea-47d9-a9a9-42a39abdd036" -d'
