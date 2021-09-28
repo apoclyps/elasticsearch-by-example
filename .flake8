@@ -1,0 +1,15 @@
+[flake8]
+exclude=__pycache,.venv,settings,.tox,build,
+    README.md,
+    # No need to check git-related items
+    .git,.gitignore,
+    # No need to check Docker-related files
+    .dockerignore,deploy.json.tmpl,docker-compose.yml,Dockerfile,Makefile,
+    # Exclude packages
+    requirements.txt, site-packages,
+max-complexity = 20
+max-line-length = 120
+select = C,E,F,W,B,B950,U100
+ignore = E203,E501,W503,U101
+# Ignore unused import warnings in __init__.py files
+per-file-ignores = __init__.py:F401

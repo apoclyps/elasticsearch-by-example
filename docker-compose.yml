@@ -1,11 +1,114 @@
-version: '3.3'
+version: "3.8"
+
+x-env: &env
+  environment:
+    # APM
+    - DATADOG_TRACE_ENABLED=${DATADOG_TRACE_ENABLED:-false}
+    - DD_ENV=${DD_ENV:-development}
+    - DD_LOG_TAGS
+    - DD_LOGS_INJECTION=${DD_LOGS_INJECTION:-true}
+    - DD_SERVICE=${DD_SERVICE:-reporting-service}
+    - DD_TRACE_AGENT_URL=${DD_TRACE_AGENT_URL-unix:/var/run/datadog/apm.sock}
+    - DD_TRACE_ANALYTICS_ENABLED=${DD_TRACE_ANALYTICS_ENABLED:-true}
+    # Application Variables
+    - DISABLE_AUTH=${DISABLE_AUTH-false}
+    - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-http://elasticsearch:9200}
+    - FLASK_ENV=${FLASK_ENV:-development}
+    - HTTP_CLIENT_TIMEOUT=${HTTP_CLIENT_TIMEOUT:-5}
+    - LOG_LEVEL=${LOG_LEVEL:-info}
+    - LOGFMT=${LOGFMT:-text}
+    - PYTHONUNBUFFERED=0
+    # Development
+    - IPDB_CONTEXT_SIZE=10
+    - PYTHONBREAKPOINT=ipdb.set_trace
 
 services:
-
-  es:
-    image: elasticsearch
-    ports:
-     - "0.0.0.0:9200:9200"
-     - "0.0.0.0:9300:9300"
+  base: &base
+    <<: *env
+    build: .
+    networks:
+      - elasticsearch-by-example
     volumes:
-     - ./data:/usr/share/elasticsearch/data
+      - .:/usr/src/app
+
+  web:
+    <<: *base
+    command: ["flask", "run", "--host=0.0.0.0"]
+    depends_on:
+      - elasticsearch
+    links:
+      - "elasticsearch"
+    ports:
+      - 16000:5000
+    stdin_open: true
+    tty: true
+
+  test:
+    <<: *base
+    command: dockerize -wait http://test-elasticsearch:9200 -timeout 15s
+      py.test --pep8 --flakes -vv --mccabe --cov=app --cov-report=term-missing --junitxml=test-results/results.xml
+    links:
+      - "test-elasticsearch"
+    depends_on:
+      - test-elasticsearch
+    volumes:
+      - "./:/usr/src/app"
+      - "./test-results/:/usr/src/app/test-results"
+
+  elasticsearch: &elasticsearch
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-http://elasticsearch:9200}
+      - ELASTICSEARCH_MAX_CONNECTIONS=${ELASTICSEARCH_MAX_CONNECTIONS:-10}
+      - ELASTICSEARCH_MAX_RETRIES=${ELASTICSEARCH_MAX_RETRIES:-2}
+      - ELASTICSEARCH_RETRY_ON_TIMEOUT=${ELASTICSEARCH_RETRY_ON_TIMEOUT:-true}
+      - ELASTICSEARCH_TIMEOUT=${ELASTICSEARCH_TIMEOUT:-5}
+      - node.name=reporting-service
+      - cluster.name=reporting-service-cluster
+      - discovery.type=single-node
+    image: elasticsearch:7.14.1
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elasticsearch-by-example
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
+
+  test-elasticsearch:
+    <<: *elasticsearch
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST:-http://test-elasticsearch:9201}
+      - ELASTICSEARCH_MAX_CONNECTIONS=${ELASTICSEARCH_MAX_CONNECTIONS:-10}
+      - ELASTICSEARCH_MAX_RETRIES=${ELASTICSEARCH_MAX_RETRIES:-2}
+      - ELASTICSEARCH_RETRY_ON_TIMEOUT=${ELASTICSEARCH_RETRY_ON_TIMEOUT:-true}
+      - ELASTICSEARCH_TIMEOUT=${ELASTICSEARCH_TIMEOUT:-5}
+      - node.name=test-reporting-service
+      - cluster.name=test-reporting-service-cluster
+      - discovery.type=single-node
+    ports:
+      - 9201:9200
+      - 9301:9300
+    volumes:
+      - ./test-data:/usr/share/elasticsearch/data
+
+  swagger:
+    image: swaggerapi/swagger-ui:v3.51.1
+    depends_on:
+      - web
+    environment:
+      - URL=http://localhost:16000/docs
+    networks:
+      - elasticsearch-by-example
+    ports:
+      - 8080:8080
+
+networks:
+  elasticsearch-by-example:
+    external: ${EXTERNAL_NETWORK:-true}
+
+volumes:
+  pgdata:

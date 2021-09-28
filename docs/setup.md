@@ -29,9 +29,9 @@ Running the following script in your terminal will populate your local elasticse
 ### Running your first query
 
 ```json
-{  
-   "query":{  
-      "match_all":{  
+{
+   "query":{
+      "match_all":{
 
       }
    }

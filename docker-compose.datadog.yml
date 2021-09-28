@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+
+  web:
+    command: ["dockerize", "-wait", "unix:/var/run/datadog/apm.sock", "flask", "run", "--host=0.0.0.0"]
+    environment:
+      - DATADOG_TRACE_ENABLED=true
+    depends_on:
+      - datadog
+    volumes:
+      - .:/usr/src/app
+      - /tmp/datadog:/var/run/datadog
+
+  datadog:
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_APM_RECEIVER_SOCKET=/var/run/datadog/apm.sock
+      - DD_PROCESS_AGENT_ENABLED=true
+      - ELASTICSEARCH_HOST
+      - ELASTICSEARCH_MAX_CONNECTIONS
+      - ELASTICSEARCH_MAX_RETRIES
+      - ELASTICSEARCH_RETRY_ON_TIMEOUT
+      - ELASTICSEARCH_TIMEOUT
+    image: datadog/agent:7.31.1
+    networks:
+      - elasticsearch_by_example
+    volumes:
+      - /tmp/datadog:/var/run/datadog

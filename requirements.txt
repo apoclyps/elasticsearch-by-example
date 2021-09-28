@@ -1,0 +1,41 @@
+# app requirements
+cryptography==3.4.7
+ddtrace==0.49.4
+elasticsearch-dsl==7.3.0
+elasticsearch7==7.13.3
+Flask-Cors==3.0.10
+Flask==2.0.1
+gunicorn==20.1.0
+marshmallow_enum==1.5.1
+marshmallow-oneofschema==2.1.0
+marshmallow==3.12.2
+python-decouple==3.4
+structlog==21.1.0
+
+# dev requirements
+apispec-oneofschema==3.0.0
+apispec==4.7.1
+black==21.6b0
+click==8.0.1
+factory-boy==3.2.0
+flake8-unused-arguments==0.0.6
+flake8==3.9.2
+freezegun==1.1.0
+ipdb==0.13.9
+isort==5.9.2
+mypy==0.910
+pdbr==0.5.7
+pytest-mock==3.6.1
+pytest==6.2.4
+python-frontmatter==1.0.0
+pyyaml==5.4.1
+responses==0.13.3
+
+# types
+types-cachetools==0.1.9
+types-click==7.1.2
+types-Flask==1.1.1
+types-freezegun==0.1.4
+types-python-dateutil==0.1.4
+types-PyYAML==5.4.3
+types-requests==2.25.0

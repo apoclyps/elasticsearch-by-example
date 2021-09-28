@@ -1,0 +1,15 @@
+openapi: "3.0.3"
+info:
+  title: "Elasticsearch By Example"
+  version: "1.0"
+servers:
+  - url: http://localhost:63000
+    description: local
+paths:
+
+  "/healthz":
+    get:
+      responses:
+        200:
+          description: OK
+      tags: [Service - Operations]

@@ -93,11 +93,11 @@ In order to do that we modify the previous search request body so that the query
 
 ```json
 curl -XPOST "http://localhost:9200/_search" -d'
-{  
-   "query":{  
-      "query_string":{  
+{
+   "query":{
+      "query_string":{
          "query":"Challenge",
-         "fields":[  
+         "fields":[
             "description"
          ]
       }
